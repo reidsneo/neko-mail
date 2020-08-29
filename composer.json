@@ -1,0 +1,19 @@
+{
+    "name": "neko/mail",
+    "type": "library",
+    "description": "neko framework mail handler & manager",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Reids",
+            "email": "reids@neoblackant.org"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Neko\\Mail\\": "src"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {}
+}
