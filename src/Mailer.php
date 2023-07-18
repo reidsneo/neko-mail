@@ -1,11 +1,11 @@
 <?php
 /**
- * PHPMailer - PHP email creation and transport class.
+ * Mailer - PHP email creation and transport class.
  * PHP Version 5.5.
  *
- * @see https://github.com/PHPMailer/PHPMailer/ The PHPMailer GitHub project
+ * @see https://github.com/Mailer/Mailer/ The Mailer GitHub project
  *
- * @author    Marcus Bointon (Synchro/coolbru) <phpmailer@synchromedia.co.uk>
+ * @author    Marcus Bointon (Synchro/coolbru) <Mailer@synchromedia.co.uk>
  * @author    Jim Jagielski (jimjag) <jimjag@gmail.com>
  * @author    Andy Prevost (codeworxtech) <codeworxtech@users.sourceforge.net>
  * @author    Brent R. Matzelle (original founder)
@@ -21,14 +21,14 @@
 namespace Neko\Mail;
 
 /**
- * PHPMailer - PHP email creation and transport class.
+ * Mailer - PHP email creation and transport class.
  *
- * @author Marcus Bointon (Synchro/coolbru) <phpmailer@synchromedia.co.uk>
+ * @author Marcus Bointon (Synchro/coolbru) <Mailer@synchromedia.co.uk>
  * @author Jim Jagielski (jimjag) <jimjag@gmail.com>
  * @author Andy Prevost (codeworxtech) <codeworxtech@users.sourceforge.net>
  * @author Brent R. Matzelle (original founder)
  */
-class PHPMailer
+class Mailer
 {
     const CHARSET_ASCII = 'us-ascii';
     const CHARSET_ISO88591 = 'iso-8859-1';
@@ -237,11 +237,11 @@ class PHPMailer
 
     /**
      * The hostname to use in the Message-ID header and as default HELO string.
-     * If empty, PHPMailer attempts to find one with, in order,
+     * If empty, Mailer attempts to find one with, in order,
      * $_SERVER['SERVER_NAME'], gethostname(), php_uname('n'), or the value
      * 'localhost.localdomain'.
      *
-     * @see PHPMailer::$Helo
+     * @see Mailer::$Helo
      *
      * @var string
      */
@@ -290,10 +290,10 @@ class PHPMailer
 
     /**
      * The SMTP HELO/EHLO name used for the SMTP connection.
-     * Default is $Hostname. If $Hostname is empty, PHPMailer attempts to find
+     * Default is $Hostname. If $Hostname is empty, Mailer attempts to find
      * one with the same method described above for $Hostname.
      *
-     * @see PHPMailer::$Hostname
+     * @see Mailer::$Hostname
      *
      * @var string
      */
@@ -320,8 +320,8 @@ class PHPMailer
      * Whether to use SMTP authentication.
      * Uses the Username and Password properties.
      *
-     * @see PHPMailer::$Username
-     * @see PHPMailer::$Password
+     * @see Mailer::$Username
+     * @see Mailer::$Password
      *
      * @var bool
      */
@@ -357,7 +357,7 @@ class PHPMailer
     public $AuthType = '';
 
     /**
-     * An instance of the PHPMailer OAuth class.
+     * An instance of the Mailer OAuth class.
      *
      * @var OAuth
      */
@@ -406,7 +406,7 @@ class PHPMailer
      * * `echo` Output plain-text as-is, appropriate for CLI
      * * `html` Output escaped, line breaks converted to `<br>`, appropriate for browser output
      * * `error_log` Output to error log as configured in php.ini
-     * By default PHPMailer will use `echo` if run from a `cli` or `cli-server` SAPI, `html` otherwise.
+     * By default Mailer will use `echo` if run from a `cli` or `cli-server` SAPI, `html` otherwise.
      * Alternatively, you can provide a callable expecting two params: a message string and the debug level:
      *
      * ```php
@@ -442,7 +442,7 @@ class PHPMailer
      *
      * @var bool
      *
-     * @deprecated 6.0.0 PHPMailer isn't a mailing list manager!
+     * @deprecated 6.0.0 Mailer isn't a mailing list manager!
      */
     public $SingleTo = false;
 
@@ -560,7 +560,7 @@ class PHPMailer
 
     /**
      * What to put in the X-Mailer header.
-     * Options: An empty string for PHPMailer default, whitespace/null for none, or a string to use.
+     * Options: An empty string for Mailer default, whitespace/null for none, or a string to use.
      *
      * @var string|null
      */
@@ -571,7 +571,7 @@ class PHPMailer
      * May be a callable to inject your own validator, but there are several built-in validators.
      * The default validator uses PHP's FILTER_VALIDATE_EMAIL filter_var option.
      *
-     * @see PHPMailer::validateAddress()
+     * @see Mailer::validateAddress()
      *
      * @var string|callable
      */
@@ -616,9 +616,9 @@ class PHPMailer
      * An array of all kinds of addresses.
      * Includes all of $to, $cc, $bcc.
      *
-     * @see PHPMailer::$to
-     * @see PHPMailer::$cc
-     * @see PHPMailer::$bcc
+     * @see Mailer::$to
+     * @see Mailer::$cc
+     * @see Mailer::$bcc
      *
      * @var array
      */
@@ -630,10 +630,10 @@ class PHPMailer
      * and one of $to, $cc, or $bcc.
      * This array is used only for addresses with IDN.
      *
-     * @see PHPMailer::$to
-     * @see PHPMailer::$cc
-     * @see PHPMailer::$bcc
-     * @see PHPMailer::$all_recipients
+     * @see Mailer::$to
+     * @see Mailer::$cc
+     * @see Mailer::$bcc
+     * @see Mailer::$all_recipients
      *
      * @var array
      */
@@ -644,7 +644,7 @@ class PHPMailer
      * In send(), valid and non duplicate entries are moved to $ReplyTo.
      * This array is used only for addresses with IDN.
      *
-     * @see PHPMailer::$ReplyTo
+     * @see Mailer::$ReplyTo
      *
      * @var array
      */
@@ -743,7 +743,7 @@ class PHPMailer
     protected $uniqueid = '';
 
     /**
-     * The PHPMailer Version number.
+     * The Mailer Version number.
      *
      * @var string
      */
@@ -874,8 +874,8 @@ class PHPMailer
      * Output debugging info via user-defined method.
      * Only generates output if SMTP debug output is enabled (@see SMTP::$do_debug).
      *
-     * @see PHPMailer::$Debugoutput
-     * @see PHPMailer::$SMTPDebug
+     * @see Mailer::$Debugoutput
+     * @see Mailer::$SMTPDebug
      *
      * @param string $str
      */
@@ -1050,8 +1050,8 @@ class PHPMailer
     }
 
     /**
-     * Add an address to one of the recipient arrays or to the ReplyTo array. Because PHPMailer
-     * can't validate addresses with an IDN without knowing the PHPMailer::$CharSet (that can still
+     * Add an address to one of the recipient arrays or to the ReplyTo array. Because Mailer
+     * can't validate addresses with an IDN without knowing the Mailer::$CharSet (that can still
      * be modified after calling this function), addition of such addresses is delayed until send().
      * Addresses that have been added already return false, but do not throw exceptions.
      *
@@ -1085,7 +1085,7 @@ class PHPMailer
             return false;
         }
         $params = [$kind, $address, $name];
-        // Enqueue addresses with IDN until we know the PHPMailer::$CharSet.
+        // Enqueue addresses with IDN until we know the Mailer::$CharSet.
         if (static::idnSupported() && $this->has8bitChars(substr($address, ++$pos))) {
             if ('Reply-To' !== $kind) {
                 if (!array_key_exists($address, $this->RecipientsQueue)) {
@@ -1292,12 +1292,12 @@ class PHPMailer
      * Alternatively you may pass in a callable to inject your own validator, for example:
      *
      * ```php
-     * PHPMailer::validateAddress('user@example.com', function($address) {
+     * Mailer::validateAddress('user@example.com', function($address) {
      *     return (strpos($address, '@') !== false);
      * });
      * ```
      *
-     * You can also set the PHPMailer::$validator static to a callable, allowing built-in methods to use your validator.
+     * You can also set the Mailer::$validator static to a callable, allowing built-in methods to use your validator.
      *
      * @param string          $address       The email address to check
      * @param string|callable $patternselect Which pattern to use
@@ -1377,13 +1377,13 @@ class PHPMailer
 
     /**
      * Converts IDN in given email address to its ASCII form, also known as punycode, if possible.
-     * Important: Address must be passed in same encoding as currently set in PHPMailer::$CharSet.
+     * Important: Address must be passed in same encoding as currently set in Mailer::$CharSet.
      * This function silently returns unmodified address if:
      * - No conversion is necessary (i.e. domain name is not an IDN, or is already in ASCII form)
      * - Conversion to punycode is impossible (e.g. required PHP functions are not available)
      *   or fails for any reason (e.g. domain contains characters not allowed in an IDN).
      *
-     * @see PHPMailer::$CharSet
+     * @see Mailer::$CharSet
      *
      * @param string $address The email address to convert
      *
@@ -1623,7 +1623,7 @@ class PHPMailer
     /**
      * Send mail using the $Sendmail program.
      *
-     * @see PHPMailer::$Sendmail
+     * @see Mailer::$Sendmail
      *
      * @param string $header The message headers
      * @param string $body   The message body
@@ -1705,7 +1705,7 @@ class PHPMailer
      * Fix CVE-2016-10033 and CVE-2016-10045 by disallowing potentially unsafe shell characters.
      * Note that escapeshellarg and escapeshellcmd are inadequate for our purposes, especially on Windows.
      *
-     * @see https://github.com/PHPMailer/PHPMailer/issues/924 CVE-2016-10045 bug report
+     * @see https://github.com/Mailer/Mailer/issues/924 CVE-2016-10045 bug report
      *
      * @param string $string The string to be validated
      *
@@ -1840,7 +1840,7 @@ class PHPMailer
      * Send mail via SMTP.
      * Returns false if there is a bad MAIL FROM, RCPT, or DATA input.
      *
-     * @see PHPMailer::setSMTPInstance() to use a different class.
+     * @see Mailer::setSMTPInstance() to use a different class.
      *
      * @uses \Neko\Mail\SMTP
      *
@@ -2134,7 +2134,7 @@ class PHPMailer
             $langcode = 'en';
         }
         $foundlang = true;
-        $lang_file = $lang_path . 'phpmailer.lang-' . $langcode . '.php';
+        $lang_file = $lang_path . 'Mailer.lang-' . $langcode . '.php';
         // There is no English translation file
         if ('en' !== $langcode) {
             // Make sure language file path is readable
@@ -2525,7 +2525,7 @@ class PHPMailer
      * Includes complete headers and body.
      * Only valid post preSend().
      *
-     * @see PHPMailer::preSend()
+     * @see Mailer::preSend()
      *
      * @return string
      */
@@ -2899,7 +2899,7 @@ class PHPMailer
 
     /**
      * Set the message type.
-     * PHPMailer only supports some preset message types, not arbitrary MIME structures.
+     * Mailer only supports some preset message types, not arbitrary MIME structures.
      */
     protected function setMessageType()
     {
@@ -2949,7 +2949,7 @@ class PHPMailer
      * Add an attachment from a path on the filesystem.
      * Never use a user-supplied path to a file!
      * Returns false if the file could not be found or read.
-     * Explicitly *does not* support passing URLs; PHPMailer is not an HTTP client.
+     * Explicitly *does not* support passing URLs; Mailer is not an HTTP client.
      * If you need to do that, fetch the resource yourself and pass it in via a local file or string.
      *
      * @param string $path        Path to the attachment
@@ -3581,7 +3581,7 @@ class PHPMailer
      * @param string $cid         Content ID of the attachment; Use this to reference
      *                            the content when using an embedded image in HTML
      * @param string $name        A filename for the attachment. If this contains an extension,
-     *                            PHPMailer will attempt to set a MIME type for the attachment.
+     *                            Mailer will attempt to set a MIME type for the attachment.
      *                            For example 'file.jpg' would get an 'image/jpeg' MIME type.
      * @param string $encoding    File encoding (see $Encoding), defaults to 'base64'
      * @param string $type        MIME type - will be used in preference to any automatically derived type
@@ -3921,8 +3921,8 @@ class PHPMailer
             if ('smtp_connect_failed' === $key) {
                 //Include a link to troubleshooting docs on SMTP connection failure
                 //this is by far the biggest cause of support questions
-                //but it's usually not PHPMailer's fault.
-                return $this->language[$key] . ' https://github.com/PHPMailer/PHPMailer/wiki/Troubleshooting';
+                //but it's usually not Mailer's fault.
+                return $this->language[$key] . ' https://github.com/Mailer/Mailer/wiki/Troubleshooting';
             }
 
             return $this->language[$key];
@@ -4002,7 +4002,7 @@ class PHPMailer
      *
      * @throws Exception
      *
-     * @see PHPMailer::html2text()
+     * @see Mailer::html2text()
      */
     public function msgHTML($message, $basedir = '', $advanced = false)
     {
@@ -4027,7 +4027,7 @@ class PHPMailer
                     }
                     //Hash the decoded data, not the URL, so that the same data-URI image used in multiple places
                     //will only be embedded once, even if it used a different encoding
-                    $cid = substr(hash('sha256', $data), 0, 32) . '@phpmailer.0'; // RFC2392 S 2
+                    $cid = substr(hash('sha256', $data), 0, 32) . '@Mailer.0'; // RFC2392 S 2
 
                     if (!$this->cidExists($cid)) {
                         $this->addStringEmbeddedImage(
@@ -4060,7 +4060,7 @@ class PHPMailer
                         $directory = '';
                     }
                     // RFC2392 S 2
-                    $cid = substr(hash('sha256', $url), 0, 32) . '@phpmailer.0';
+                    $cid = substr(hash('sha256', $url), 0, 32) . '@Mailer.0';
                     if (strlen($basedir) > 1 && '/' !== substr($basedir, -1)) {
                         $basedir .= '/';
                     }

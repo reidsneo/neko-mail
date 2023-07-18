@@ -2,7 +2,7 @@
 
 namespace Neko\Mail;
 
-use Neko\Mail\PHPMailer;
+use Neko\Mail\Mailer;
 
 class Email
 {
@@ -14,28 +14,47 @@ class Email
     }
     
     /**
-     * @param array $config
+     * @param string $config
      * @return MailService
      */
-    public function setAdapter($config) : PHPMailer
+    public function setAdapter($config) : Mailer
     {
-        $mailer = new PHPMailer();
-        $mailer->isSMTP();
-        $mailer->Host = $this->config[$config]['host'];
-        $mailer->Port = $this->config[$config]['port'];
-        $mailer->SMTPSecure =  $this->config[$config]['SMTPSecure'];
-        $mailer->SMTPAuth = $this->config[$config]['SMTPAuth'];
+        $mailer = new Mailer();
+        if($config == "internal")
+        {
+            // echo "internal mode";
+            // $mailer->isMail();
 
-        if (!empty($this->config[$config]['username']) && !empty($this->config[$config]['password'])) {
-            $mailer->Username = $this->config[$config]['username'];
-            $mailer->Password = $this->config[$config]['password'];
+            // $mailer->SMTPDebug = 2;                           
+            $mailer->isSMTP();        
+            // $mailer->Host = "smtp.xxxxxxx.com";
+            $mailer->SMTPAuth = false;                      
+            $mailer->Port = 25;
+
+            $mailer->DKIM_domain = $_ENV['MAIL_DKIM_DOMAIN'];
+            $mailer->DKIM_selector = $_ENV['MAIL_DKIM_SELECTOR'];
+            $mailer->DKIM_private = $_ENV['MAIL_DKIM_PATH'];
+            $mailer->DKIM_passphrase = "";
+            $mailer->DKIM_identity = $mailer->From;
+
+            }else{
+            $mailer->isSMTP();
+            $mailer->Host = $this->config[$config]['host'];
+            $mailer->Port = $this->config[$config]['port'];
+            if(!empty($this->config[$config]['SMTPSecure']))
+            {
+                $mailer->SMTPSecure =  $this->config[$config]['SMTPSecure'];
+            }
+            $mailer->SMTPAuth = $this->config[$config]['SMTPAuth'];
+            $mailer->SMTPSecure = Mailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+
+            if (!empty($this->config[$config]['username']) && !empty($this->config[$config]['password'])) {
+                $mailer->Username = $this->config[$config]['username'];
+                $mailer->Password = $this->config[$config]['password'];
+            }
         }
-/*
-        if (!empty($config['from'])) {
-            $mailer->setFrom($config['from']['email'], $config['from']['name']);
-            $mailer->addReplyTo($config['from']['email'], $config['from']['name']);
-        }
-*/  
+        $mailer->setFrom($_ENV['MAIL_SENDER'], $_ENV['MAIL_SENDER_NAME']);
+
         $this->mailer = $mailer;
         return $mailer;
     }
@@ -51,10 +70,9 @@ class Email
       */
     function send(array $from, array $to, string $subject, string $body, array $attachments = []) {
         $mail = $this->mailer;
-        $mail->SMTPDebug = 2; //Alternative to above constant
+        //$mail->SMTPDebug = 2; //Alternative to above constant
         $mail->addReplyTo($from['email'], $from['name']);
         $mail->setFrom($from['email'], $from['name']);
-        $mail->addAddress($this->username);
 
         foreach ($to as $individual) {
             //$mail->addBCC($individual);
@@ -65,12 +83,12 @@ class Email
         $mail->Subject = $subject;
         $mail->Body = $body;
 
+
         foreach ($attachments as $attachment) {
             $mail->addAttachment($attachment[0], $attachment[1]);
         }
 
         if (!$mail->send() && count($to) > 0)  {
-
             header('HTTP/1.0 500 Email Error');
             return false;
         }
